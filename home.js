@@ -62,3 +62,15 @@ window.addEventListener("scroll", () => {
 
 
 
+
+function sendContactMail(event) {
+    event.preventDefault();
+    const name = document.getElementById("username").value.trim();
+    const email = document.getElementById("useremail").value.trim();
+    const message = document.getElementById("usermessage").value.trim();
+    const subject = encodeURIComponent("Message from " + name);
+    const body = encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n\n" + message);
+    const link = document.createElement("a");
+    link.href = "mailto:signify263@gmail.com?subject=" + subject + "&body=" + body;
+    link.click();
+}
