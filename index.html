@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/img/Signify_logo.png" type="image/x-icon" />
+    <title>Signify</title>
+
+    <!-- Remix Icon CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- External CSS File -->
+    <link rel="stylesheet" href="assets/css/home.css" />
+    <link rel="stylesheet" href="assets/css/popup.css" />
+
+</head>
+
+<body>
+    <!-- NAV -->
+    <nav>
+        <div class="container nav-wrapper">
+            <a href="#" class="nav-logo" onclick="scrollHome()">
+                <img src="assets/img/Signify_logo.png" alt="Signify logo" class="nav-logo-img">
+                Signify
+            </a>
+
+            <div class="nav-menu">
+                <a href="#home" class="active">Home</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact Us</a>
+            </div>
+
+            <i class="ri-moon-line theme-toggle" id="themeToggle"></i>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="home" class="hero">
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <h1>Secure Digital Signature Verification</h1>
+                <p>
+                    Signify delivers intelligent authentication systems that ensure document
+                    integrity and eliminate fraudulent signature risks.
+                </p>
+                <div class="hero-buttons">
+                    <button id="openAdd">Add Signature</button>
+                    <button id="openVerify">Verify Signature</button>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <div class="animation-container">
+                    <div class="signature">
+                        <img src="assets/img/Animation_signature.svg" alt="Signature Animation" id="signature">
+                    </div>
+
+                    <div class="magnifier" id="magnifier">
+                        <div class="lens"></div>
+                        <div class="rim"></div>
+                        <div class="shine"></div>
+                        <div class="handle"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+        <div class="container about-grid">
+            <div class="about-image">
+                <img src="assets/img/About.png" alt="About">
+            </div>
+
+            <div class="about-text">
+                <h2>Who we are &<br>why choose <span class="brand-name">Signify</span></h2>
+                <p>
+                    Signify modernizes digital authentication processes and strengthens trust
+                    in secure document verification systems.
+                </p>
+
+                <ul class="check-list">
+                    <li><i class="ri-checkbox-fill about__details-icon"></i>Advanced signature validation</li>
+                    <li><i class="ri-checkbox-fill about__details-icon"></i>Fraud detection intelligence</li>
+                    <li><i class="ri-checkbox-fill about__details-icon"></i>Secure cloud-based verification</li>
+                    <li><i class="ri-checkbox-fill about__details-icon"></i>Enterprise-grade reliability</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact">
+        <div class="container contact-container">
+
+            <div class="contact-left">
+                <h2 class="contact-title">
+                    Reach out to us <br>
+                    today and secure <br> your digital trust
+                </h2>
+
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <i class="ri-phone-line"></i>
+                        <div>
+                            <h4>Call us</h4>
+                            <a href="tel:+910123456789">
+                                +91 012 345 6789
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="ri-mail-line"></i>
+                        <div>
+                            <h4>Email us</h4>
+                            <a href="mailto:support@signify.com?subject=Support Request&body=Hello Signify Team,">
+                                support@signify.com
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Contact Form-->
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('Message Sent!')">
+                <div class="form-group">
+                    <input type="text" name="username" id="username" autocomplete="name" placeholder=" " required>
+                    <label for="username">Your Name</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" name="useremail" id="useremail" autocomplete="email" placeholder=" " required>
+                    <label for="useremail">Your Email</label>
+                </div>
+
+                <div class="form-group textarea">
+                    <textarea name="usermessage" id="usermessage" placeholder=" " required></textarea>
+                    <label for="usermessage">Your Message</label>
+                </div>
+
+                <button type="submit" class="btn-gradient">
+                    Send Message <i class="ri-arrow-right-up-line"></i>
+                </button>
+            </form>
+
+        </div>
+    </section>
+
+    <!--FOOTER-->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-col">
+                <a href="#" class="footer-logo footer-brand">
+                    <img src="assets/img/Signify_logo.png" alt="Signify logo" class="nav-logo-img">
+                    Signify
+                </a>
+                <p class="footer-tagline">Secure. Verify. Protect.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Company</h4>
+                <a href="#about" class="footer-item">About</a>
+                <a href="#contact" class="footer-item">Contact</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a href="mailto:support@signify.com?subject=Support Request&body=Hello Signify Team,"
+                    class="footer-item">
+                    support@signify.com
+                </a>
+                <a href="tel:+910123456789" class="footer-item">
+                    +91 012 345 6789
+                </a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Follow Us</h4>
+                <div class="footer-social">
+                    <i class="ri-facebook-fill"></i>
+                    <i class="ri-instagram-line"></i>
+                    <i class="ri-twitter-x-line"></i>
+                    <i class="ri-linkedin-fill"></i>
+                </div>
+            </div>
+
+        </div>
+
+        <p class="footer-copy">
+            © 2026 Signify. All rights reserved.
+        </p>
+    </footer>
+
+    <!-- Scroll Up Button -->
+    <a href="#" class="scroll-up" id="scrollUp">
+        <i class="ri-arrow-up-fill scrollup__icon"></i>
+    </a>
+
+
+    <!-- ================= POPUP MODAL ================= -->
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+
+            <span class="close-modal" id="closeModal">&times;</span>
+
+            <!-- ================= ADD SIGNATURE FORM ================= -->
+            <div class="form-box" id="addForm">
+                <h2>Add Signature</h2>
+
+                <input type="text" id="customerName" placeholder="Customer Name" required>
+                <input type="text" id="customerId" placeholder="Customer ID" required>
+
+                <label for="signatureFiles" class="custom-file-upload">Upload 6–12 Signatures (PNG | JPG | JPEG)</label>
+
+                <!-- Hidden File Input -->
+                <input type="file" id="signatureFiles" multiple accept=".png,.jpg,.jpeg" hidden>
+
+                <!-- Upload UI -->
+                <div class="upload-area" id="addUploadArea">
+                    <i class="ri-add-line plus-icon"></i>
+                    <p>Click to Upload Signatures</p>
+                </div>
+
+                <!-- Preview Area -->
+                <div class="preview-container" id="signaturePreview"></div>
+                <div id="addWarning" class="form-warning"></div>
+                <div class="button-container">
+                    <button class="btn-savecustomer" id="saveCustomer">Save Customer</button>
+                </div>
+            </div>
+
+
+            <!-- ================= VERIFY SIGNATURE FORM ================= -->
+            <div class="form-box" id="verifyForm">
+                <h2>Verify Signature</h2>
+
+                <input type="text" id="verifyId" placeholder="Customer ID" required>
+
+                <div id="verifyResult" class="verify-result"></div>
+
+                <label for="verifyFile" class="custom-file-upload">Upload Signature to Verify (PNG | JPG | JPEG)</label>
+
+                <!-- Hidden File Input -->
+                <input type="file" id="verifyFile" accept=".png,.jpg,.jpeg" hidden>
+
+                <!-- Upload UI -->
+                <div class="upload-area" id="verifyUploadArea">
+                    <i class="ri-add-line plus-icon"></i>
+                    <p>Click to Upload Signature</p>
+                </div>
+
+                <!-- Preview Area -->
+                <div class="preview-container" id="verifyPreview"></div>
+                <div id="verifyWarning" class="form-warning"></div>
+                <div class="button-container">
+                    <button class="btn-verifysavecustomer" id="verifyBtn">Verify</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- External JS -->
+    <script src="assets/js/home.js"></script>
+    <script src="assets/js/animation.js"></script>
+    <script src="assets/js/popup.js"></script>
+
+</body>
+
+</html>
+
