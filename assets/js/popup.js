@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const customerStatus = document.getElementById("customerStatus");
     const customerInfo = document.getElementById("customerInfo");
     let checkTimeout = null;
+    const BACKEND_URL = "https://signature-e63s.onrender.com";
 
     /* ================= CUSTOMER ID LIVE CHECK ================= */
 
@@ -55,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
             customerStatus.className = "customer-status checking";
 
             try {
-                const response = await fetch(`http://localhost:5000/customer/${id}`);
+                const response = await fetch(`${BACKEND_URL}/customer/${id}`);
                 const result = await response.json();
 
                 if (result.exists) {
@@ -329,7 +330,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         try {
-            const response = await fetch("http://localhost:5000/add-customer", {
+            const response = await fetch(`${BACKEND_URL}/add-customer`, {
                 method: "POST",
                 body: formData
             });
@@ -400,7 +401,7 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.append("signature", verifySelectedFile);
 
         try {
-            const response = await fetch("http://localhost:5000/verify-signature", {
+            const response = await fetch(`${BACKEND_URL}/verify-signature`, {
                 method: "POST",
                 body: formData
             });

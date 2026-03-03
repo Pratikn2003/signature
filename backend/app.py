@@ -17,11 +17,16 @@ from preprocessing import preprocess_signature
 from feature_extraction import extract_all_features, verify_signature
 
 app = Flask(__name__)
-CORS(app)  # Allow frontend to call API
+CORS(app, origins=[
+    "https://pratikn2003.github.io",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500"
+])
 
 # Folders
-UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), '..', 'uploads')
-DATA_FOLDER = os.path.join(os.path.dirname(__file__), '..', 'data')
+BASE_DIR = os.path.dirname(__file__)
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
+DATA_FOLDER = os.path.join(BASE_DIR, 'data')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(DATA_FOLDER, exist_ok=True)
 
