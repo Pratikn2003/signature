@@ -1,0 +1,93 @@
+ body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #0f172a, #020617);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 750px;
+            text-align: center;
+        }
+
+        /* Signature */
+        .signature {
+            position: relative;
+        }
+
+        .signature img {
+            width: 650px;
+            display: block;
+            margin: auto;
+            opacity: 0;
+            animation: fadeIn 1.2s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* ===== REALISTIC PURPLE MAGNIFIER ===== */
+
+        .magnifier {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        /* Purple metallic rim */
+        .rim {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 8px solid #a855f7;
+            box-shadow:
+                0 0 20px #a855f7,
+                inset 0 0 8px rgba(0, 0, 0, .6);
+            z-index: 3;
+        }
+
+        /* Fully Transparent Lens */
+        .lens {
+            position: absolute;
+            inset: 8px;
+            border-radius: 50%;
+            background: transparent;
+        }
+
+        /* Light reflection */
+        .shine {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(130deg,
+                    rgba(255, 255, 255, .35),
+                    transparent 40%);
+            border-radius: 50%;
+            z-index: 4;
+        }
+
+        /* Realistic purple handle */
+        .handle {
+            position: absolute;
+            width: 178px;
+            height: 26px;
+            background: linear-gradient(to right, #972df5, #b572f7);
+            bottom: -65px;
+            right: -128px;
+            transform: rotate(45deg);
+            border-radius: 20px;
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, .6),
+                inset 0 0 6px rgba(255, 255, 255, .4);
+        }

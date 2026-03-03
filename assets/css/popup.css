@@ -1,0 +1,323 @@
+
+/* ================= MODAL ================= */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    width: 750px;
+    max-height: 720px;
+    padding: 40px;
+    border-radius: 25px;
+    position: relative;
+    backdrop-filter: blur(15px);
+    background: linear-gradient(135deg,
+            rgba(124, 58, 237, 0.85),
+            rgba(176, 101, 251, 0.85));
+    border: 1px solid #915fe5;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+    color: var(--light);
+    animation: popup 0.3s ease;
+}
+
+@keyframes popup {
+    from {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.close-modal {
+    position: absolute;
+    top: 30px;
+    right: 35px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.form-box {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-box.active {
+    display: flex;
+}
+
+.form-box.active h2 {
+    font-size: 25px;
+}
+
+.form-box input {
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    border: none;
+    outline: none;
+}
+
+.custom-file-upload {
+    font-size: 16px;
+}
+
+
+/* ================= UPLOAD AREA ================= */
+
+.upload-area {
+    border: 2.5px dashed #7627ff;
+    border-radius: 14px;
+    padding: 22px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s ease;
+    background: rgba(124, 58, 237, 0.03);
+}
+
+.upload-area:hover {
+    background: linear-gradient(135deg,
+            rgba(124, 58, 237, 0.35),
+            rgba(176, 101, 251, 0.35));
+}
+
+.plus-icon {
+    font-size: 25px;
+    color: var(--light);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.upload-area p {
+    font-size: 16px;
+    color: var(--light);
+    margin: 0;
+}
+
+
+/* ================= PREVIEW CONTAINER ================= */
+
+.preview-container {
+    margin-top: 15px;
+    display: flex;
+    max-height: 200px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+
+/* ================= PREVIEW ITEM ================= */
+
+.preview-item {
+    position: relative;
+    width: 90px;
+    height: 90px;
+}
+
+.preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 0.5px solid #e5e7eb;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: 0.3s ease;
+}
+
+.preview-item img:hover {
+    transform: scale(1.07);
+}
+
+
+/* ================= REMOVE BUTTON ================= */
+
+.remove-btn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 22px;
+    height: 22px;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    border-radius: 50%;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: 0.2s;
+}
+
+.preview-item:hover .remove-btn {
+    opacity: 1;
+}
+
+
+.remove-btn:hover {
+    background: rgba(0, 0, 0, 0.5);
+
+}
+
+.form-warning {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+    color: #fd0004;
+    font-weight: 400;
+    min-height: 15px;
+}
+
+/* ================= CUSTOMER ID STATUS ================= */
+
+.input-with-status {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-status input {
+    flex: 1;
+    padding-right: 100px;
+}
+
+.customer-status {
+    position: absolute;
+    right: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.customer-status.checking {
+    color: #facc15;
+}
+
+.customer-status.found {
+    color: #22c55e;
+}
+
+.customer-status.not-found {
+    color: #ef4444;
+}
+
+.customer-info {
+    font-size: 13px;
+    min-height: 20px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.info-found {
+    color: #22c55e;
+}
+
+.info-not-found {
+    color: #ef4444;
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-savecustomer {
+    padding: 14px;
+    margin-top: 2px;
+    width: 200px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--purple), var(--purple-light));
+    color: white;
+    font-size: 16px;
+    transition: transform 0.2s ease, background 0.3s ease, filter 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-savecustomer:hover {
+    transform: none;
+    filter: brightness(1.1);
+}
+
+.btn-savecustomer:active {
+    transform: scale(0.96);
+    filter: brightness(0.9);
+}
+
+.btn-verifysavecustomer {
+    padding: 14px;
+    margin-top: 2px;
+    width: 200px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--purple), var(--purple-light));
+    color: white;
+    font-size: 16px;
+    transition: transform 0.2s ease, background 0.3s ease, filter 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-verifysavecustomer:hover {
+    transform: none;
+    filter: brightness(1.1);
+}
+
+.btn-verifysavecustomer:active {
+    transform: scale(0.96);
+    filter: brightness(0.9);
+}
+
+/* ================= DISABLE SCROLL WHEN MODAL OPEN ================= */
+
+body.modal-open {
+    overflow: hidden;
+}
+
+
+.verify-success {
+    margin-top: 10px;
+    color: #00ff88;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* ================= MODAL RESPONSIVE FIX ================= */
+
+@media (max-width: 500px) {
+    .preview-item {
+        width: 80px;
+        height: 80px;
+    }
+
+    .upload-area {
+        padding: 18px;
+    }
+}
