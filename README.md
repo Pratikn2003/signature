@@ -37,4 +37,4 @@ pip install -r requirements.txt
 python app.py
 ```
 
-The backend API runs on port 5000 by default for local development. For production, the frontend is configured to use the Render deployment URL.
+The backend API runs on port 5000 by default for local development. For production, the frontend uses the Render deployment URL configured in `assets/js/popup.js` (`BACKEND_URL` constant).
