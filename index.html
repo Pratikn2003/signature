@@ -10,8 +10,12 @@
     <!-- Remix Icon CDN -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
-    <!-- EmailJS SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!--GOOGLE FONT-->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- External CSS File -->
     <link rel="stylesheet" href="assets/css/home.css" />
@@ -28,13 +32,23 @@
                 Signify
             </a>
 
-            <div class="nav-menu">
+            <div class="nav-menu" id="navMenu">
+
+                <!-- CLOSE BUTTON -->
+                <i class="ri-close-line nav-close" id="navClose"></i>
+
                 <a href="#home" class="active">Home</a>
                 <a href="#about">About</a>
                 <a href="#contact">Contact Us</a>
             </div>
 
-            <i class="ri-moon-line theme-toggle" id="themeToggle"></i>
+            <div class="nav-icons">
+                <!-- Light/Dark Mode Theme Toggle Icon -->
+                <i class="ri-moon-line theme-toggle" id="themeToggle"></i>
+
+                <!-- Hamburger Menu Icon -->
+                <i class="ri-menu-line hamburger" id="hamburger"></i>
+            </div>
         </div>
     </nav>
 
@@ -97,67 +111,63 @@
 
     <!-- CONTACT -->
     <section id="contact" class="section contact">
-        <div class="container contact-container">
+        <div class="container">
+            <div class="contact-container">
 
-            <div class="contact-left">
-                <h2 class="contact-title">
-                    Send a message <br>
-                    to anyone from <br> <span class="brand-name">Signify</span>
-                </h2>
+                <div class="contact-left">
+                    <h2 class="contact-title">
+                        Reach out to us <br>
+                        today and secure <br> your digital trust
+                    </h2>
 
-                <div class="contact-details">
-                    <div class="contact-item">
-                        <i class="ri-phone-line"></i>
-                        <div>
-                            <h4>Call us</h4>
-                            <a href="tel:+910123456789">
-                                +91 012 345 6789
-                            </a>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="ri-phone-line"></i>
+                            <div>
+                                <h4>Call us</h4>
+                                <a href="tel:+910123456789">
+                                    +91 012 345 6789
+                                </a>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="contact-item">
-                        <i class="ri-mail-line"></i>
-                        <div>
-                            <h4>Email us</h4>
-                            <a href="mailto:signify263@gmail.com?subject=Support Request&body=Hello Signify Team,">
-                                signify263@gmail.com
-                            </a>
+                        <div class="contact-item">
+                            <i class="ri-mail-line"></i>
+                            <div>
+                                <h4>Email us</h4>
+                                <a href="mailto:signify263@gmail.com?subject=Support Request&body=Hello Signify Team,">
+                                    signify263@gmail.com
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!--Contact Form-->
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" name="username" id="username" autocomplete="name" placeholder=" " required>
+                        <label for="username">Your Name</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" name="useremail" id="useremail" autocomplete="email" placeholder=" "
+                            required>
+                        <label for="useremail">Your Email</label>
+                    </div>
+
+                    <div class="form-group textarea">
+                        <textarea name="usermessage" id="usermessage" placeholder=" " required></textarea>
+                        <label for="usermessage">Your Message</label>
+                    </div>
+
+                    <button type="submit" class="btn-gradient">
+                        Send Message <i class="ri-arrow-right-up-line"></i>
+                    </button>
+                </form>
+
             </div>
-
-            <!--Contact Form (EmailJS - Send to any email)-->
-            <form class="contact-form" id="contactForm">
-
-                <div class="form-group">
-                    <input type="email" name="to_email" id="toEmail" autocomplete="email" placeholder=" " required>
-                    <label for="toEmail">Recipient Email (Send To)</label>
-                </div>
-
-                <div class="form-group">
-                    <input type="text" name="from_name" id="username" autocomplete="name" placeholder=" " required>
-                    <label for="username">Your Name</label>
-                </div>
-
-                <div class="form-group">
-                    <input type="text" name="subject" id="emailSubject" placeholder=" " required>
-                    <label for="emailSubject">Subject</label>
-                </div>
-
-                <div class="form-group textarea">
-                    <textarea name="message" id="usermessage" placeholder=" " required></textarea>
-                    <label for="usermessage">Your Message</label>
-                </div>
-
-                <button type="submit" class="btn-gradient" id="submitBtn">
-                    Send Message <i class="ri-arrow-right-up-line"></i>
-                </button>
-                <p id="formStatus" style="margin-top:10px; font-size:14px;"></p>
-            </form>
-
-        </div>
+        </div>    
     </section>
 
     <!--FOOTER-->
@@ -249,11 +259,7 @@
             <div class="form-box" id="verifyForm">
                 <h2>Verify Signature</h2>
 
-                <div class="input-with-status">
-                    <input type="text" id="verifyId" placeholder="Customer ID" required>
-                    <span id="customerStatus" class="customer-status"></span>
-                </div>
-                <div id="customerInfo" class="customer-info"></div>
+                <input type="text" id="verifyId" placeholder="Customer ID" required>
 
                 <div id="verifyResult" class="verify-result"></div>
 
@@ -275,6 +281,7 @@
                     <button class="btn-verifysavecustomer" id="verifyBtn">Verify</button>
                 </div>
             </div>
+
         </div>
     </div>
 
