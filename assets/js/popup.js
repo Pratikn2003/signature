@@ -30,53 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const verifyWarning = document.getElementById("verifyWarning");
 
     let verifySelectedFile = null;
-    let customerExists = false;
-    const customerStatus = document.getElementById("customerStatus");
-    const customerInfo = document.getElementById("customerInfo");
-    let checkTimeout = null;
-    const BACKEND_URL = "https://signature-e63s.onrender.com";
-
-    /* ================= CUSTOMER ID LIVE CHECK ================= */
-
-    const verifyIdInput = document.getElementById("verifyId");
-    verifyIdInput?.addEventListener("input", function () {
-        const id = this.value.trim();
-        customerExists = false;
-        customerStatus.textContent = "";
-        customerStatus.className = "customer-status";
-        customerInfo.innerHTML = "";
-        verifyWarning.innerText = "";
-
-        if (id === "") return;
-
-        // Debounce: wait 500ms after typing stops
-        clearTimeout(checkTimeout);
-        checkTimeout = setTimeout(async () => {
-            customerStatus.textContent = "Checking...";
-            customerStatus.className = "customer-status checking";
-
-            try {
-                const response = await fetch(`${BACKEND_URL}/customer/${id}`);
-                const result = await response.json();
-
-                if (result.exists) {
-                    customerExists = true;
-                    customerStatus.textContent = "✅ Found";
-                    customerStatus.className = "customer-status found";
-                    customerInfo.innerHTML = `<span class="info-found"><strong>${result.customerName}</strong> — ${result.numSignatures} signatures stored</span>`;
-                } else {
-                    customerExists = false;
-                    customerStatus.textContent = "❌ Not Found";
-                    customerStatus.className = "customer-status not-found";
-                    customerInfo.innerHTML = `<span class="info-not-found">No customer with ID "${id}" exists. Please add the customer first.</span>`;
-                }
-            } catch (error) {
-                customerStatus.textContent = "⚠️ Server error";
-                customerStatus.className = "customer-status not-found";
-                customerInfo.innerHTML = `<span class="info-not-found">Could not connect to server. Make sure backend is running.</span>`;
-            }
-        }, 500);
-    });
 
 
 
@@ -107,12 +60,6 @@ document.addEventListener("DOMContentLoaded", function () {
         verifyPreview.innerHTML = "";
         verifyFileInput.value = "";
         verifyWarning.innerText = "";
-        customerExists = false;
-        if (customerStatus) {
-            customerStatus.textContent = "";
-            customerStatus.className = "customer-status";
-        }
-        if (customerInfo) customerInfo.innerHTML = "";
 
         addForm.classList.remove("active");
         verifyForm.classList.remove("active");
@@ -157,11 +104,22 @@ document.addEventListener("DOMContentLoaded", function () {
     /* ================= CLOSE ON ESC KEY ================= */
 
     document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && modal.classList.contains("show")) {
-            closePopup();
+        if (e.key === "Escape") {
+
+            const overlay = document.getElementById("imageOverlay");
+
+            // If image preview is open → close only image
+            if (overlay) {
+                overlay.remove();
+                return;
+            }
+
+            // Otherwise close modal
+            if (modal.classList.contains("show")) {
+                closePopup();
+            }
         }
     });
-
 
     /* ================= UPLOAD CLICK ================= */
 
@@ -285,7 +243,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* ================= SAVE VALIDATION ================= */
 
-    saveBtn.addEventListener("click", async () => {
+    saveBtn.addEventListener("click", () => {
 
         warningBox.innerText = "";
 
@@ -316,63 +274,32 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // === SEND TO BACKEND ===
-        saveBtn.disabled = true;
-        saveBtn.innerText = "Processing...";
+        // If everything is valid
+        alert("Customer Saved Successfully!");
+
+        // Reset inputs
+        document.getElementById("customerName").value = "";
+        document.getElementById("customerId").value = "";
+
+        // Reset uploaded files
+        selectedFiles = [];
+        signaturePreview.innerHTML = "";
+        signatureInput.value = "";
+
+        // Clear warning
         warningBox.innerText = "";
 
-        const formData = new FormData();
-        formData.append("customerName", customerName);
-        formData.append("customerId", customerId);
+        // Close popup
+        closePopup();
 
-        selectedFiles.forEach((file) => {
-            formData.append("signatures", file);
-        });
-
-        try {
-            const response = await fetch(`${BACKEND_URL}/add-customer`, {
-                method: "POST",
-                body: formData
-            });
-
-            const result = await response.json();
-
-            if (result.success) {
-                warningBox.style.color = "#22c55e";
-                warningBox.innerText = `✅ ${result.message}`;
-
-                // Reset after 2 seconds
-                setTimeout(() => {
-                    document.getElementById("customerName").value = "";
-                    document.getElementById("customerId").value = "";
-                    selectedFiles = [];
-                    signaturePreview.innerHTML = "";
-                    signatureInput.value = "";
-                    warningBox.innerText = "";
-                    warningBox.style.color = "";
-                    closePopup();
-                }, 2000);
-            } else {
-                warningBox.style.color = "#ef4444";
-                warningBox.innerText = `❌ ${result.error}`;
-            }
-        } catch (error) {
-            warningBox.style.color = "#ef4444";
-            warningBox.innerText = "❌ Server not responding. Make sure the backend is running.";
-            console.error("Error:", error);
-        }
-
-        saveBtn.disabled = false;
-        saveBtn.innerText = "Save Customer";
     });
 
 
     /* ================= VERIFY VALIDATION ================= */
 
-    verifyBtn?.addEventListener("click", async () => {
+    verifyBtn?.addEventListener("click", () => {
 
         verifyWarning.innerText = "";
-        verifyWarning.style.color = "";
 
         const verifyId = document.getElementById("verifyId").value.trim();
 
@@ -381,69 +308,19 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        if (!customerExists) {
-            verifyWarning.style.color = "#ef4444";
-            verifyWarning.innerText = "❌ Customer ID not found. Please check the ID and try again.";
-            return;
-        }
-
         if (!verifySelectedFile) {
             verifyWarning.innerText = "Please upload a signature to verify.";
             return;
         }
 
-        // === SEND TO BACKEND ===
-        verifyBtn.disabled = true;
-        verifyBtn.innerText = "Verifying...";
-
-        const formData = new FormData();
-        formData.append("customerId", verifyId);
-        formData.append("signature", verifySelectedFile);
-
-        try {
-            const response = await fetch(`${BACKEND_URL}/verify-signature`, {
-                method: "POST",
-                body: formData
-            });
-
-            const result = await response.json();
-
-            if (result.success) {
-                const resultDiv = document.getElementById("verifyResult");
-
-                if (result.isGenuine) {
-                    verifyWarning.style.color = "#22c55e";
-                    verifyWarning.innerHTML = `
-                        <strong>${result.result}</strong><br>
-                        Customer: ${result.customerName}<br>
-                        Confidence: ${result.confidence}%
-                    `;
-                    if (resultDiv) {
-                        resultDiv.innerHTML = `<div style="color:#22c55e;font-weight:600;font-size:16px;">${result.result} — ${result.confidence}% match</div>`;
-                    }
-                } else {
-                    verifyWarning.style.color = "#ef4444";
-                    verifyWarning.innerHTML = `
-                        <strong>${result.result}</strong><br>
-                        Customer: ${result.customerName}<br>
-                        Similarity: ${result.confidence}%
-                    `;
-                    if (resultDiv) {
-                        resultDiv.innerHTML = `<div style="color:#ef4444;font-weight:600;font-size:16px;">${result.result} — ${result.confidence}% match</div>`;
-                    }
-                }
-            } else {
-                verifyWarning.style.color = "#ef4444";
-                verifyWarning.innerText = `❌ ${result.error}`;
+        // If validation passes, trigger external verification logic
+        document.dispatchEvent(new CustomEvent("verifyFormValid", {
+            detail: {
+                customerId: verifyId,
+                file: verifySelectedFile
             }
-        } catch (error) {
-            verifyWarning.style.color = "#ef4444";
-            verifyWarning.innerText = "❌ Server not responding. Make sure the backend is running.";
-            console.error("Error:", error);
-        }
+        }));
 
-        verifyBtn.disabled = false;
-        verifyBtn.innerText = "Verify";
     });
 
 
@@ -452,6 +329,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function openFullImage(src) {
 
         const overlay = document.createElement("div");
+        overlay.id = "imageOverlay";
         overlay.style.position = "fixed";
         overlay.style.inset = "0";
         overlay.style.background = "rgba(0,0,0,0.85)";
@@ -480,20 +358,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         function closeViewer() {
             document.body.removeChild(overlay);
-            document.removeEventListener("keydown", escHandler);
         }
 
         closeBtn.addEventListener("click", closeViewer);
-
         overlay.addEventListener("click", (e) => {
             if (e.target === overlay) closeViewer();
         });
 
-        function escHandler(e) {
-            if (e.key === "Escape") closeViewer();
-        }
-
-        document.addEventListener("keydown", escHandler);
     }
 
 });
