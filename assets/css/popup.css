@@ -185,54 +185,6 @@
     min-height: 15px;
 }
 
-/* ================= CUSTOMER ID STATUS ================= */
-
-.input-with-status {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.input-with-status input {
-    flex: 1;
-    padding-right: 100px;
-}
-
-.customer-status {
-    position: absolute;
-    right: 12px;
-    font-size: 13px;
-    font-weight: 600;
-    white-space: nowrap;
-}
-
-.customer-status.checking {
-    color: #facc15;
-}
-
-.customer-status.found {
-    color: #22c55e;
-}
-
-.customer-status.not-found {
-    color: #ef4444;
-}
-
-.customer-info {
-    font-size: 13px;
-    min-height: 20px;
-    margin-bottom: 5px;
-    text-align: center;
-}
-
-.info-found {
-    color: #22c55e;
-}
-
-.info-not-found {
-    color: #ef4444;
-}
-
 
 .button-container {
     display: flex;
