@@ -10,8 +10,8 @@ function startScan() {
     const areaWidth = rect.width;
     const areaHeight = rect.height;
 
-    const glassSize = 180;
-    const padding = 50;
+    const glassSize = magnifier.offsetWidth;
+    const padding = Math.min(glassSize * 0.28, areaWidth * 0.15);
 
     // UI Layering
     magnifier.style.pointerEvents = "none";
@@ -50,14 +50,14 @@ function startScan() {
         const end = path[segment + 1];
 
         const midX = (start.x + end.x) / 2;
-        const midY = (start.y + end.y) / 2 - 15;
+        const midY = (start.y + end.y) / 2 - glassSize * 0.08;
 
         // Bezier calculation for the signature curve
         const x = (1 - easedT) * (1 - easedT) * start.x + 2 * (1 - easedT) * easedT * midX + easedT * easedT * end.x;
         const y = (1 - easedT) * (1 - easedT) * start.y + 2 * (1 - easedT) * easedT * midY + easedT * easedT * end.y;
 
         // translate3d eliminates sub-pixel vibration
-        magnifier.style.transform = `translate3d(${x}px, ${y}px, 100px)`;
+        magnifier.style.transform = `translate3d(${x}px, ${y}px, 0)`;
 
         if (t < 1) {
             requestAnimationFrame(animateSegment);
@@ -80,6 +80,10 @@ function startScan() {
 
 function showResultInsideLens() {
     const lens = magnifier.querySelector(".lens");
+
+    // remove old result
+    const oldResult = lens.querySelector(".scan-result");
+    if (oldResult) oldResult.remove();
     const isMatch = Math.random() > 0.3;
 
     const message = document.createElement("div");
