@@ -1,122 +1,120 @@
+// ================= ALWAYS OPEN PAGE FROM TOP =================
+if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+}
 
-
+// ================= SCROLL TO TOP FUNCTION =================
 function scrollHome() {
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-const toggle = document.getElementById("themeToggle");
+// ================= DOM LOADED =================
+document.addEventListener("DOMContentLoaded", function () {
 
-toggle.addEventListener("click", () => {
-    document.documentElement.classList.toggle("dark"); // <-- FIXED
-    toggle.classList.toggle("ri-sun-line");
-});
+    // Immediately reset scroll (no flicker)
+    window.scrollTo(0, 0);
 
-const sections = document.querySelectorAll("section");
-const navLinks = document.querySelectorAll(".nav-menu a");
+    // ================= THEME TOGGLE =================
+    const toggle = document.getElementById("themeToggle");
 
-window.addEventListener("scroll", () => {
+    if (toggle) {
+        toggle.addEventListener("click", () => {
+            document.documentElement.classList.toggle("dark");
+            toggle.classList.toggle("ri-sun-line");
+        });
+    }
 
+    // ================= SECTION ACTIVE LINK + NAVBAR EFFECT =================
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll(".nav-menu a");
     const navbar = document.querySelector("nav");
 
-    if (window.scrollY > 10) {
-        navbar.classList.add("scrolled");
-    } else {
-        navbar.classList.remove("scrolled");
+    window.addEventListener("scroll", () => {
+
+        // Navbar background on scroll
+        if (window.scrollY > 10) {
+            navbar.classList.add("scrolled");
+        } else {
+            navbar.classList.remove("scrolled");
+        }
+
+        // Active section highlight
+        let current = "";
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 200;
+            if (window.scrollY >= sectionTop) {
+                current = section.id;
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === "#" + current) {
+                link.classList.add("active");
+            }
+        });
+    });
+
+    // ================= CONTACT FORM RESET =================
+    const contactForm = document.getElementById("contactForm");
+
+    if (contactForm) {
+        contactForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            // If invalid, show browser validation UI
+            if (!contactForm.checkValidity()) {
+                contactForm.reportValidity();
+                return;
+            }
+
+            // Success message
+            alert("Message Sent!");
+
+            // Reset form fields
+            contactForm.reset();
+
+            // Remove focus (fix floating label issue)
+            document.activeElement.blur();
+        });
     }
 
-    let current = "";
+    // ================= SCROLL UP BUTTON =================
+    const scrollUp = document.getElementById("scrollUp");
 
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop - 200;
-        if (window.scrollY >= sectionTop) {
-            current = section.id;
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 400) {
+            scrollUp.classList.add("show");
+        } else {
+            scrollUp.classList.remove("show");
         }
     });
 
-    navLinks.forEach(link => {
-        link.classList.remove("active");
-        if (link.getAttribute("href") === "#" + current) {
-            link.classList.add("active");
-        }
+    // ================= MOBILE SLIDE NAV =================
+const hamburger = document.getElementById("hamburger");
+const navMenu = document.getElementById("navMenu");
+const navClose = document.getElementById("navClose");
+
+if (hamburger && navMenu) {
+
+    // OPEN MENU
+    hamburger.addEventListener("click", () => {
+        navMenu.classList.add("show-menu");
     });
-});
 
-
-
-
-
-const scrollUp = document.getElementById("scrollUp");
-
-window.addEventListener("scroll", () => {
-    if (window.scrollY > 400) {
-        scrollUp.classList.add("show");
-    } else {
-        scrollUp.classList.remove("show");
-    }
-});
-
-
-// ================= CONTACT FORM (EmailJS - Send to any email) =================
-// Initialize EmailJS with your Public Key
-emailjs.init("eB8aNYx7sURbZXido");
-
-const contactForm = document.getElementById("contactForm");
-const formStatus = document.getElementById("formStatus");
-const submitBtn = document.getElementById("submitBtn");
-
-contactForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = 'Sending... <i class="ri-loader-4-line"></i>';
-    formStatus.textContent = "";
-    formStatus.style.color = "";
-
-    // Collect form data
-    const templateParams = {
-
-
-        to_email: document.getElementById("toEmail").value.trim(),
-        from_name: document.getElementById("username").value.trim(),
-        subject: document.getElementById("emailSubject").value.trim(),
-        message: document.getElementById("usermessage").value.trim(),
-    };
-
-    // Validate all fields are filled
-    if (!templateParams.to_email || !templateParams.from_name || !templateParams.subject || !templateParams.message) {
-        formStatus.textContent = "❌ Please fill in all fields.";
-        formStatus.style.color = "#ef4444";
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = 'Send Message <i class="ri-arrow-right-up-line"></i>';
-        return;
+    // CLOSE MENU (X button)
+    if (navClose) {
+        navClose.addEventListener("click", () => {
+            navMenu.classList.remove("show-menu");
+        });
     }
 
-    console.log("Sending email with params:", templateParams);
-
-    try {
-        // Use sendForm to directly pass form fields to EmailJS template
-        const response = await emailjs.sendForm("service_2200x2e", "template_dgs9ba5", contactForm);
-        console.log("EmailJS Response:", response);
-
-        formStatus.textContent = "✅ Message sent successfully!";
-        formStatus.style.color = "#22c55e";
-        contactForm.reset();
-    } catch (error) {
-        console.error("EmailJS Full Error:", error);
-        console.error("Error status:", error.status);
-        console.error("Error text:", error.text);
-        formStatus.textContent = "❌ Failed to send: " + (error.text || error.message || JSON.stringify(error));
-        formStatus.style.color = "#ef4444";
-    }
-
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = 'Send Message <i class="ri-arrow-right-up-line"></i>';
+    // CLOSE WHEN CLICKING A LINK
+    document.querySelectorAll(".nav-menu a").forEach(link => {
+        link.addEventListener("click", () => {
+            navMenu.classList.remove("show-menu");
+        });
+    });
+}
 });
-
-
-
-
-
-
-
-
